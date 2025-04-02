@@ -1,6 +1,8 @@
 <?php
 
 namespace App\Http\Controllers;
+
+use App\Models\ClientDetail;
 use App\Models\Contact;
 use App\Models\Custom;
 use App\Models\FAQ;
@@ -15,13 +17,14 @@ use App\Models\User;
 use App\Models\WORequest;
 use App\Models\WorkOrder;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Auth;
 
 class HomeController extends Controller
 {
     public function index()
     {
-        if (\Auth::check()) {
-            if (\Auth::user()->type == 'super admin') {
+        if (Auth::check()) {
+            if (Auth::user()->type == 'super admin') {
                 $result['totalOrganization'] = User::where('type', 'owner')->count();
                 $result['totalSubscription'] = Subscription::count();
                 $result['totalTransaction'] = PackageTransaction::count();
@@ -34,7 +37,8 @@ class HomeController extends Controller
 
                 return view('dashboard.super_admin', compact('result'));
             } else {
-                $result['totalClient'] = User::where('parent_id', parentId())->where('type','client')->count();
+                $result['totalClient'] = ClientDetail::select('company')->distinct()->get()->count();
+                $result['totalBranches'] = User::where('parent_id', parentId())->where('type','client')->count();
                 $result['totalWORequest'] = WORequest::where('parent_id', parentId())->count();
                 $result['totalWorkorder'] = WorkOrder::where('parent_id', parentId())->count();
                 $result['totalInvoice'] = Invoice::where('parent_id', parentId())->count();

@@ -267,6 +267,8 @@ Route::resource('authPage', AuthPageController::class)->middleware(
 Route::resource('client', ClientController::class)->middleware([ 'auth','XSS']);
 
 Route::group(["prefix"=>'client','as'=>"client.",'middleware'=>[ 'auth','XSS']],function(){
+    Route::get("create/{company}",[ClientController::class,'create'])->name("create");
+    Route::post("store/{company}",[ClientController::class,'store'])->name("store");
     Route::get("company/hq/create",[ClientController::class,'createHQ'])->name("company.hq.create");
     Route::get("company/hq/edit/{id}",[ClientController::class,'editHQ'])->name("company.hq.edit");
     Route::get("company/{name}",[ClientController::class,'listBranches'])->name("company.branches");

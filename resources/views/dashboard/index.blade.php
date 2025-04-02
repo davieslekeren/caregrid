@@ -6,7 +6,6 @@
     <li class="breadcrumb-item" aria-current="page">{{ __('Dashboard') }}</li>
 @endsection
 @push('script-page')
-
 <script>
     var options = {
         chart: {
@@ -75,11 +74,8 @@
     var chart = new ApexCharts(document.querySelector('#incomeExpenseByMonth'), options);
     chart.render();
 </script>
-
-
-
-
 @endpush
+
 @section('content')
     <div class="row">
 
@@ -93,7 +89,7 @@
                             </div>
                         </div>
                         <div class="flex-grow-1 ms-3">
-                            <p class="mb-1">{{ __('Total Client') }}</p>
+                            <p class="mb-1">{{ __('Clients') }}</p>
                             <div class="d-flex align-items-center justify-content-between">
                                 <h4 class="mb-0">{{ $result['totalClient'] }}</h4>
 
@@ -103,6 +99,28 @@
                 </div>
             </div>
         </div>
+
+        <div class="col-lg-3 col-md-6">
+            <div class="card">
+                <div class="card-body">
+                    <div class="d-flex align-items-center">
+                        <div class="flex-shrink-0">
+                            <div class="avtar bg-light-secondary">
+                                <i class="ti ti-list f-24"></i>
+                            </div>
+                        </div>
+                        <div class="flex-grow-1 ms-3">
+                            <p class="mb-1">{{ __('Branches/Sites') }}</p>
+                            <div class="d-flex align-items-center justify-content-between">
+                                <h4 class="mb-0">{{ $result['totalBranches'] }}</h4>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <div class="col-lg-3 col-md-6">
             <div class="card">
                 <div class="card-body">
@@ -113,7 +131,7 @@
                             </div>
                         </div>
                         <div class="flex-grow-1 ms-3">
-                            <p class="mb-1">{{ __('Total WO Request') }}</p>
+                            <p class="mb-1">{{ __('WorkOrder Requests') }}</p>
                             <div class="d-flex align-items-center justify-content-between">
                                 <h4 class="mb-0">{{ $result['totalWORequest'] }}</h4>
                             </div>
@@ -132,7 +150,7 @@
                             </div>
                         </div>
                         <div class="flex-grow-1 ms-3">
-                            <p class="mb-1">{{ __('Total Workorder') }}</p>
+                            <p class="mb-1">{{ __('Workorders') }}</p>
                             <div class="d-flex align-items-center justify-content-between">
                                 <h4 class="mb-0">{{ $result['totalWorkorder'] }}</h4>
                             </div>
@@ -151,7 +169,7 @@
                             </div>
                         </div>
                         <div class="flex-grow-1 ms-3">
-                            <p class="mb-1">{{ __('Total Invoice') }}</p>
+                            <p class="mb-1">{{ __('Invoices') }}</p>
                             <div class="d-flex align-items-center justify-content-between">
                                 <h4 class="mb-0">{{ $result['totalInvoice'] }}
                                 </h4>

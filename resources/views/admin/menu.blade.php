@@ -5,7 +5,7 @@
     $subscription = \App\Models\Subscription::find($authUser->subscription);
     $routeName = \Request::route()->getName();
     $pricing_feature_settings = getSettingsValByIdName(1, 'pricing_feature');
-    $companies = \App\Models\ClientDetail::distinct('company')->get();
+    $companies = \App\Models\ClientDetail::select('company')->distinct()->get();
 @endphp
 <nav class="pc-sidebar">
     <div class="navbar-wrapper">

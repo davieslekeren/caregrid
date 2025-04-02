@@ -28,7 +28,7 @@ class ClientController extends Controller
     
 
 
-    public function create(Request $request,$company)
+    public function create($company)
     {
         return view('client.create',compact('company'));
     }
