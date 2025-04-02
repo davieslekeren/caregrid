@@ -7,7 +7,10 @@ use App\Models\Notification;
 use App\Models\Subscription;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Crypt;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Validator;
 use Spatie\Permission\Models\Role;
 
 class ClientController extends Controller
@@ -15,25 +18,26 @@ class ClientController extends Controller
 
     public function index()
     {
-        if (\Auth::user()->can('manage client')) {
-            $clients = User::where('parent_id', parentId())->where('type','client')->get();
-            return view('client.index', compact('clients'));
+        if (Auth::user()->can('manage client')) {
+            $companies = ClientDetail::all()->unique('company');
+            return view('client.companies', compact('companies'));
         } else {
             return redirect()->back()->with('error', __('Permission Denied.'));
         }
     }
+    
 
 
-    public function create()
+    public function create(Request $request,$company)
     {
-        return view('client.create');
+        return view('client.create',compact('company'));
     }
 
 
     public function store(Request $request)
     {
-        if (\Auth::user()->can('create client')) {
-            $validator = \Validator::make(
+        if (Auth::user()->can('create client')) {
+            $validator = Validator::make(
                 $request->all(), [
                     'name' => 'required',
                     'email' => 'required|email|unique:users',
@@ -61,7 +65,7 @@ class ClientController extends Controller
             $user->name = $request->name;
             $user->email = $request->email;
             $user->phone_number = $request->phone_number;
-            $user->password = \Hash::make(123456);
+            $user->password = Hash::make(123456);
             $user->type = $userRole->name;
             $user->profile = 'avatar.png';
             $user->lang = 'english';
@@ -103,8 +107,6 @@ class ClientController extends Controller
 
             if (!empty($notification) && $notification->enabled_email == 1) {
                 $notificationResponse = MessageReplace($notification, $user->id);
-
-
                 $data['subject'] = $notificationResponse['subject'];
                 $data['message'] = $notificationResponse['message'];
                 $data['module'] = $module;
@@ -118,7 +120,7 @@ class ClientController extends Controller
                 }
             }
 
-            return redirect()->route('client.index')->with('success', __('Client successfully created.'.'</br>'.$errorMessage));
+            return redirect()->route('client.index',[$client->company])->with('success', __('Client successfully created.'.'</br>'.$errorMessage));
         } else {
             return redirect()->back()->with('error', __('Permission Denied.'));
         }
@@ -142,8 +144,8 @@ class ClientController extends Controller
 
     public function update(Request $request, $id)
     {
-        if (\Auth::user()->can('edit client')) {
-            $validator = \Validator::make(
+        if (Auth::user()->can('edit client')) {
+            $validator = Validator::make(
                 $request->all(), [
                     'name' => 'required',
                     'email' => 'required|email|unique:users,email,' . $id,
@@ -207,6 +209,30 @@ class ClientController extends Controller
         } else {
             return $lastClient->client_id + 1;
         }
+    }
+
+    public function listBranches(Request $request,$company)
+    {
+        if (Auth::user()->can('manage client')) {
+            $clients = User::with(['clients'])->where('parent_id', parentId())
+            ->where('type','client')
+            ->whereHas("clients",fn($q) => $q->where("company","like",$company))->get();
+            return view('client.index', compact('clients','company'));
+        } else {
+            return redirect()->back()->with('error', __('Permission Denied.'));
+        }
+    }
+
+    public function createHQ(Request $request)
+    {
+        return view('client.client-create');
+    }
+
+    public function editHQ(Request $request,$id)
+    {
+        $client=ClientDetail::find($id);
+        $user=User::find($client->user_id);
+        return view('client.client-edit',compact('user'));
     }
 
 }

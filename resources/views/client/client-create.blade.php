@@ -1,9 +1,9 @@
-{{Form::open(array('url'=>'client','method'=>'post'))}}
+{{Form::open(array('url'=>route('client.store'),'method'=>'post'))}}
 <div class="modal-body">
     <div class="row">
         <div class="form-group col-md-6">
-            {{Form::label('name',__('Name'),array('class'=>'form-label')) }} <span class="text-danger">*</span>
-            {{Form::text('name',null,array('class'=>'form-control','placeholder'=>__('Enter Name'),'required'=>'required'))}}
+            {{Form::label('company',__('Company'),array('class'=>'form-label')) }} <span class="text-danger">*</span>
+            {{Form::text('company',null,array('class'=>'form-control','placeholder'=>__('Enter company'),'reqired'=>"required"))}}
         </div>
         <div class="form-group col-md-6">
             {{Form::label('email',__('Email'),array('class'=>'form-label'))}} <span class="text-danger">*</span>
@@ -13,15 +13,17 @@
             {{Form::label('phone_number',__('Phone Number'),array('class'=>'form-label')) }} <span class="text-danger">*</span>
             {{Form::text('phone_number',null,array('class'=>'form-control','placeholder'=>__('Enter phone number'),'required'=>'required'))}}
         </div>
-        <div class="form-group col-md-6">
-            {{Form::label('company',__('Company'),array('class'=>'form-label')) }} <span class="text-danger">*</span>
-            {{Form::text('company',$company,array('class'=>'form-control','placeholder'=>__('Enter company'),'reqired'=>"required", 'readonly'=>''))}}
-        </div>
     </div>
     <div class=" col-md-12 mb-20">
-        <h5> {{__('Service Address')}}</h5>
+        <hr>
+        <h5> {{__('Branch/Site Address')}}</h5>
+        <hr>
     </div>
     <div class="row">
+        <div class="form-group col-md-6">
+            {{Form::label('name',__('Head Office'),array('class'=>'form-label')) }} <span class="text-danger">*</span>
+            {{Form::text('name',null,array('class'=>'form-control','placeholder'=>__('Name Of Head Office'),'required'=>'required'))}}
+        </div>
         <div class="form-group col-md-6">
             {{Form::label('service_city',__('City'),array('class'=>'form-label')) }} <span class="text-danger">*</span>
             {{Form::text('service_city',null,array('class'=>'form-control','placeholder'=>__('Enter service city'),'required'=>'required'))}}

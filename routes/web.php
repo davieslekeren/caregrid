@@ -41,19 +41,19 @@ use App\Http\Controllers\InvoiceController;
 
 require __DIR__ . '/auth.php';
 
-Route::get('/', [HomeController::class,'index'])->middleware(
+Route::get('/', [HomeController::class, 'index'])->middleware(
     [
 
         'XSS',
     ]
 );
-Route::get('home', [HomeController::class,'index'])->name('home')->middleware(
+Route::get('home', [HomeController::class, 'index'])->name('home')->middleware(
     [
 
         'XSS',
     ]
 );
-Route::get('dashboard', [HomeController::class,'index'])->name('dashboard')->middleware(
+Route::get('dashboard', [HomeController::class, 'index'])->name('dashboard')->middleware(
     [
 
         'XSS',
@@ -92,15 +92,16 @@ Route::group(
             'auth',
             'XSS',
         ],
-    ], function (){
+    ],
+    function () {
 
-    Route::resource('subscriptions', SubscriptionController::class);
-    Route::get('coupons/history', [CouponController::class,'history'])->name('coupons.history');
-    Route::delete('coupons/history/{id}/destroy', [CouponController::class,'historyDestroy'])->name('coupons.history.destroy');
-    Route::get('coupons/apply', [CouponController::class, 'apply'])->name('coupons.apply');
-    Route::resource('coupons', CouponController::class);
-    Route::get('subscription/transaction', [SubscriptionController::class,'transaction'])->name('subscription.transaction');
-}
+        Route::resource('subscriptions', SubscriptionController::class);
+        Route::get('coupons/history', [CouponController::class, 'history'])->name('coupons.history');
+        Route::delete('coupons/history/{id}/destroy', [CouponController::class, 'historyDestroy'])->name('coupons.history.destroy');
+        Route::get('coupons/apply', [CouponController::class, 'apply'])->name('coupons.apply');
+        Route::resource('coupons', CouponController::class);
+        Route::get('subscription/transaction', [SubscriptionController::class, 'transaction'])->name('subscription.transaction');
+    }
 );
 
 //-------------------------------Subscription Payment-------------------------------------------
@@ -111,10 +112,11 @@ Route::group(
             'auth',
             'XSS',
         ],
-    ], function (){
+    ],
+    function () {
 
-    Route::post('subscription/{id}/stripe/payment', [SubscriptionController::class,'stripePayment'])->name('subscription.stripe.payment');
-}
+        Route::post('subscription/{id}/stripe/payment', [SubscriptionController::class, 'stripePayment'])->name('subscription.stripe.payment');
+    }
 );
 //-------------------------------Settings-------------------------------------------
 Route::group(
@@ -123,28 +125,29 @@ Route::group(
             'auth',
             'XSS',
         ],
-    ], function (){
-    Route::get('settings', [SettingController::class,'index'])->name('setting.index');
+    ],
+    function () {
+        Route::get('settings', [SettingController::class, 'index'])->name('setting.index');
 
-    Route::post('settings/account', [SettingController::class,'accountData'])->name('setting.account');
-    Route::delete('settings/account/delete', [SettingController::class,'accountDelete'])->name('setting.account.delete');
-    Route::post('settings/password', [SettingController::class,'passwordData'])->name('setting.password');
-    Route::post('settings/general', [SettingController::class,'generalData'])->name('setting.general');
-    Route::post('settings/smtp', [SettingController::class,'smtpData'])->name('setting.smtp');
-    Route::get('settings/smtp-test', [SettingController::class, 'smtpTest'])->name('setting.smtp.test');
-    Route::post('settings/smtp-test', [SettingController::class, 'smtpTestMailSend'])->name('setting.smtp.testing');
-    Route::post('settings/payment', [SettingController::class,'paymentData'])->name('setting.payment');
-    Route::post('settings/site-seo', [SettingController::class,'siteSEOData'])->name('setting.site.seo');
-    Route::post('settings/google-recaptcha', [SettingController::class,'googleRecaptchaData'])->name('setting.google.recaptcha');
-    Route::post('settings/company', [SettingController::class,'companyData'])->name('setting.company');
-    Route::post('settings/2fa', [SettingController::class, 'twofaEnable'])->name('setting.twofa.enable');
+        Route::post('settings/account', [SettingController::class, 'accountData'])->name('setting.account');
+        Route::delete('settings/account/delete', [SettingController::class, 'accountDelete'])->name('setting.account.delete');
+        Route::post('settings/password', [SettingController::class, 'passwordData'])->name('setting.password');
+        Route::post('settings/general', [SettingController::class, 'generalData'])->name('setting.general');
+        Route::post('settings/smtp', [SettingController::class, 'smtpData'])->name('setting.smtp');
+        Route::get('settings/smtp-test', [SettingController::class, 'smtpTest'])->name('setting.smtp.test');
+        Route::post('settings/smtp-test', [SettingController::class, 'smtpTestMailSend'])->name('setting.smtp.testing');
+        Route::post('settings/payment', [SettingController::class, 'paymentData'])->name('setting.payment');
+        Route::post('settings/site-seo', [SettingController::class, 'siteSEOData'])->name('setting.site.seo');
+        Route::post('settings/google-recaptcha', [SettingController::class, 'googleRecaptchaData'])->name('setting.google.recaptcha');
+        Route::post('settings/company', [SettingController::class, 'companyData'])->name('setting.company');
+        Route::post('settings/2fa', [SettingController::class, 'twofaEnable'])->name('setting.twofa.enable');
 
-    Route::get('footer-setting', [SettingController::class, 'footerSetting'])->name('footerSetting');
-    Route::post('settings/footer', [SettingController::class,'footerData'])->name('setting.footer');
+        Route::get('footer-setting', [SettingController::class, 'footerSetting'])->name('footerSetting');
+        Route::post('settings/footer', [SettingController::class, 'footerData'])->name('setting.footer');
 
-    Route::get('language/{lang}', [SettingController::class,'lanquageChange'])->name('language.change');
-    Route::post('theme/settings', [SettingController::class,'themeSettings'])->name('theme.settings');
-}
+        Route::get('language/{lang}', [SettingController::class, 'lanquageChange'])->name('language.change');
+        Route::post('theme/settings', [SettingController::class, 'themeSettings'])->name('theme.settings');
+    }
 );
 
 
@@ -187,12 +190,14 @@ Route::group(
             'auth',
             'XSS',
         ],
-    ], function () {
+    ],
+    function () {
 
-    Route::get('logged/history', [UserController::class,'loggedHistory'])->name('logged.history');
-    Route::get('logged/{id}/history/show', [UserController::class,'loggedHistoryShow'])->name('logged.history.show');
-    Route::delete('logged/{id}/history', [UserController::class,'loggedHistoryDestroy'])->name('logged.history.destroy');
-});
+        Route::get('logged/history', [UserController::class, 'loggedHistory'])->name('logged.history');
+        Route::get('logged/{id}/history/show', [UserController::class, 'loggedHistoryShow'])->name('logged.history.show');
+        Route::delete('logged/{id}/history', [UserController::class, 'loggedHistoryDestroy'])->name('logged.history.destroy');
+    }
+);
 
 
 //-------------------------------Plan Payment-------------------------------------------
@@ -202,13 +207,14 @@ Route::group(
             'auth',
             'XSS',
         ],
-    ], function (){
-    Route::post('subscription/{id}/bank-transfer', [PaymentController::class, 'subscriptionBankTransfer'])->name('subscription.bank.transfer');
-    Route::get('subscription/{id}/bank-transfer/action/{status}', [PaymentController::class, 'subscriptionBankTransferAction'])->name('subscription.bank.transfer.action');
-    Route::post('subscription/{id}/paypal', [PaymentController::class, 'subscriptionPaypal'])->name('subscription.paypal');
-    Route::get('subscription/{id}/paypal/{status}', [PaymentController::class, 'subscriptionPaypalStatus'])->name('subscription.paypal.status');
-    Route::post('subscription/{id}/{user_id}/manual-assign-package', [PaymentController::class, 'subscriptionManualAssignPackage'])->name('subscription.manual_assign_package');
-}
+    ],
+    function () {
+        Route::post('subscription/{id}/bank-transfer', [PaymentController::class, 'subscriptionBankTransfer'])->name('subscription.bank.transfer');
+        Route::get('subscription/{id}/bank-transfer/action/{status}', [PaymentController::class, 'subscriptionBankTransferAction'])->name('subscription.bank.transfer.action');
+        Route::post('subscription/{id}/paypal', [PaymentController::class, 'subscriptionPaypal'])->name('subscription.paypal');
+        Route::get('subscription/{id}/paypal/{status}', [PaymentController::class, 'subscriptionPaypalStatus'])->name('subscription.paypal.status');
+        Route::post('subscription/{id}/{user_id}/manual-assign-package', [PaymentController::class, 'subscriptionManualAssignPackage'])->name('subscription.manual_assign_package');
+    }
 );
 
 //-------------------------------Notification-------------------------------------------
@@ -218,9 +224,9 @@ Route::resource('notification', NotificationController::class)->middleware(
         'XSS',
 
     ]
- );
+);
 
- Route::get('email-verification/{token}', [VerifyEmailController::class, 'verifyEmail'])->name('email-verification')->middleware(
+Route::get('email-verification/{token}', [VerifyEmailController::class, 'verifyEmail'])->name('email-verification')->middleware(
     [
         'XSS',
     ]
@@ -258,33 +264,23 @@ Route::resource('authPage', AuthPageController::class)->middleware(
 );
 
 //-------------------------------Client-------------------------------------------
-Route::resource('client', ClientController::class)->middleware(
-    [
-        'auth',
-        'XSS',
-    ]
-);
+Route::resource('client', ClientController::class)->middleware([ 'auth','XSS']);
+
+Route::group(["prefix"=>'client','as'=>"client.",'middleware'=>[ 'auth','XSS']],function(){
+    Route::get("company/hq/create",[ClientController::class,'createHQ'])->name("company.hq.create");
+    Route::get("company/hq/edit/{id}",[ClientController::class,'editHQ'])->name("company.hq.edit");
+    Route::get("company/{name}",[ClientController::class,'listBranches'])->name("company.branches");
+});
 
 //-------------------------------Services & Parts-------------------------------------------
-Route::group(
-    [
-        'middleware' => [
-            'auth',
-            'XSS',
-        ],
-    ], function () {
-    Route::delete('services/tasks', [ServicePartController::class, 'taskDestroy'])->name('service.task.destroy');
-    Route::resource('services-parts', ServicePartController::class);
-}
+Route::group( ['middleware' => ['auth','XSS']],function () {
+        Route::delete('services/tasks', [ServicePartController::class, 'taskDestroy'])->name('service.task.destroy');
+        Route::resource('services-parts', ServicePartController::class);
+    }
 );
 
 //-------------------------------Asset-------------------------------------------
-Route::resource('asset', AssetController::class)->middleware(
-    [
-        'auth',
-        'XSS',
-    ]
-);
+Route::resource('asset', AssetController::class)->middleware(['auth','XSS']);
 //-------------------------------WO Request-------------------------------------------
 Route::resource('wo-request', WORequestController::class)->middleware(
     [
@@ -299,13 +295,14 @@ Route::group(
             'auth',
             'XSS',
         ],
-    ], function () {
+    ],
+    function () {
 
-    Route::get('estimation/{id}/status', [EstimationController::class,'estimationStatus'])->name('estimation.status');
-    Route::delete('estimation/service/part/destroy', [EstimationController::class,'servicePartDestroy'])->name('estimation.service.part.destroy');
-    Route::get('estimation/service/part', [EstimationController::class, 'getServicePart'])->name('estimation.service.part');
-    Route::resource('estimation', EstimationController::class);
-}
+        Route::get('estimation/{id}/status', [EstimationController::class, 'estimationStatus'])->name('estimation.status');
+        Route::delete('estimation/service/part/destroy', [EstimationController::class, 'servicePartDestroy'])->name('estimation.service.part.destroy');
+        Route::get('estimation/service/part', [EstimationController::class, 'getServicePart'])->name('estimation.service.part');
+        Route::resource('estimation', EstimationController::class);
+    }
 );
 
 
@@ -316,22 +313,23 @@ Route::group(
             'auth',
             'XSS',
         ],
-    ], function () {
-    Route::get('workorder/{id}/service/task/create', [WorkOrderController::class,'serviceTaskCreate'])->name('workorder.service.task.create');
-    Route::post('workorder/{id}/service/task/store', [WorkOrderController::class,'serviceTaskStore'])->name('workorder.service.task.store');
-    Route::get('workorder/{id}/service/task/{tid}/edit', [WorkOrderController::class,'serviceTaskEdit'])->name('workorder.service.task.edit');
-    Route::put('workorder/{id}/service/task/{tid}/update', [WorkOrderController::class,'serviceTaskUpdate'])->name('workorder.service.task.update');
-    Route::delete('workorder/{id}/service/task/{tid}/delete', [WorkOrderController::class,'serviceTaskDestroy'])->name('workorder.service.task.destroy');
+    ],
+    function () {
+        Route::get('workorder/{id}/service/task/create', [WorkOrderController::class, 'serviceTaskCreate'])->name('workorder.service.task.create');
+        Route::post('workorder/{id}/service/task/store', [WorkOrderController::class, 'serviceTaskStore'])->name('workorder.service.task.store');
+        Route::get('workorder/{id}/service/task/{tid}/edit', [WorkOrderController::class, 'serviceTaskEdit'])->name('workorder.service.task.edit');
+        Route::put('workorder/{id}/service/task/{tid}/update', [WorkOrderController::class, 'serviceTaskUpdate'])->name('workorder.service.task.update');
+        Route::delete('workorder/{id}/service/task/{tid}/delete', [WorkOrderController::class, 'serviceTaskDestroy'])->name('workorder.service.task.destroy');
 
-    Route::get('workorder/{id}/service/appointment', [WorkOrderController::class,'serviceAppointment'])->name('workorder.service.appointment');
-    Route::put('workorder/{id}/service/appointment/store', [WorkOrderController::class,'serviceAppointmentStore'])->name('workorder.service.appointment.store');
-    Route::delete('workorder/{id}/service/appointment/delete', [WorkOrderController::class,'serviceAppointmentDestroy'])->name('workorder.service.appointment.destroy');
+        Route::get('workorder/{id}/service/appointment', [WorkOrderController::class, 'serviceAppointment'])->name('workorder.service.appointment');
+        Route::put('workorder/{id}/service/appointment/store', [WorkOrderController::class, 'serviceAppointmentStore'])->name('workorder.service.appointment.store');
+        Route::delete('workorder/{id}/service/appointment/delete', [WorkOrderController::class, 'serviceAppointmentDestroy'])->name('workorder.service.appointment.destroy');
 
-    Route::get('workorder/{id}/status', [WorkOrderController::class,'workorderStatus'])->name('workorder.status');
-    Route::delete('workorder/service/part/destroy', [WorkOrderController::class,'servicePartDestroy'])->name('workorder.service.part.destroy');
-    Route::get('workorder/service/part', [WorkOrderController::class, 'getServicePart'])->name('workorder.service.part');
-    Route::resource('workorder', WorkOrderController::class);
-}
+        Route::get('workorder/{id}/status', [WorkOrderController::class, 'workorderStatus'])->name('workorder.status');
+        Route::delete('workorder/service/part/destroy', [WorkOrderController::class, 'servicePartDestroy'])->name('workorder.service.part.destroy');
+        Route::get('workorder/service/part', [WorkOrderController::class, 'getServicePart'])->name('workorder.service.part');
+        Route::resource('workorder', WorkOrderController::class);
+    }
 );
 
 
@@ -351,14 +349,14 @@ Route::group(
             'auth',
             'XSS',
         ],
-    ], function () {
-    Route::get('client/workorder/list', [InvoiceController::class,'getWorkorder'])->name('client.workorder');
-    Route::get('workorders/details', [InvoiceController::class,'getWorkorderDetails'])->name('workorder.details');
-    Route::resource('invoice', InvoiceController::class);
-}
+    ],
+    function () {
+        Route::get('client/workorder/list', [InvoiceController::class, 'getWorkorder'])->name('client.workorder');
+        Route::get('workorders/details', [InvoiceController::class, 'getWorkorderDetails'])->name('workorder.details');
+        Route::resource('invoice', InvoiceController::class);
+    }
 );
 
 Route::get('page/{slug}', [PageController::class, 'page'])->name('page');
 //-------------------------------FAQ-------------------------------------------
 Route::impersonate();
-

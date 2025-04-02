@@ -5,6 +5,7 @@
     $subscription = \App\Models\Subscription::find($authUser->subscription);
     $routeName = \Request::route()->getName();
     $pricing_feature_settings = getSettingsValByIdName(1, 'pricing_feature');
+    $companies = \App\Models\ClientDetail::distinct('company')->get();
 @endphp
 <nav class="pc-sidebar">
     <div class="navbar-wrapper">
@@ -37,8 +38,7 @@
                     @endif
                 @else
                     @if (Gate::check('manage user') || Gate::check('manage role') || Gate::check('manage logged history'))
-                        <li
-                            class="pc-item pc-hasmenu {{ in_array($routeName, ['users.index', 'logged.history', 'role.index', 'role.create', 'role.edit']) ? 'pc-trigger active' : '' }}">
+                        <li class="pc-item pc-hasmenu {{ in_array($routeName, ['users.index', 'logged.history', 'role.index', 'role.create', 'role.edit']) ? 'pc-trigger active' : '' }}">
                             <a href="#!" class="pc-link">
                                 <span class="pc-micon">
                                     <i class="ti ti-users"></i>
@@ -79,26 +79,26 @@
                     </li>
 
                     @if (Gate::check('manage client'))
-                        <li
-                            class="pc-item pc-hasmenu {{ in_array($routeName, ['client.index', 'client.show']) ? 'active' : '' }}">
+                        <li class="pc-item pc-hasmenu {{ in_array($routeName, ['client.index', 'client.show']) ? 'active' : '' }}">
                             <a href="#!" class="pc-link" href="{{ route('client.index') }}">
                                 <span class="pc-micon"><i data-feather="user-check"></i></span>
-                                <span class="pc-mtext">{{ __('Client') }}</span>
+                                <span class="pc-mtext">{{ __('Clients') }}</span>
                                 <span class="pc-arrow"><i data-feather="chevron-right"></i></span>
                             </a>
-                                <ul class="pc-submenu"
-                                style="display: {{ in_array($routeName, ['client.index', 'client.show']) ? 'active' : '' }}">
-                                @if (Gate::check('manage client'))
-                                    <li class="pc-item pc-hasmenu {{ in_array($routeName, ['client.index', 'client.show']) ? 'active' : '' }}">
-                                        <a class="pc-link" href="{{ route('client.index') }}">{{ __('AAR Healthcare') }}</a>
+                            <ul class="pc-submenu" style="display: {{ in_array($routeName, ['client.index', 'client.show','client..company.branches']) ? 'active' : '' }}">
+                                {{-- <li class="pc-item {{ in_array($routeName, ['client.index']) ? 'active' : '' }}">
+                                    <a class="pc-link customModal" href="#" data-url="{{ route('client.create') }}" data-title="{{ __('Create Client') }}"> 
+                                        {{ __('Add Client') }}
+                                    </a>
+                                </li> --}}
+                                <li class="pc-item {{ in_array($routeName, ['client.index']) ? 'active' : '' }}">
+                                    <a class="pc-link" href="{{ route('client.index') }}"> {{ __('Manage All') }}</a>
+                                </li>
+                                @foreach ($companies as $company)
+                                    <li class="pc-item {{ in_array($routeName, ['client.company.branches']) ? 'active' : '' }}">
+                                        <a class="pc-link" href="{{ route('client.company.branches',[$company->company]) }}">{{ $company->company }}</a>
                                     </li>
-                                @endif
-                                @if (Gate::check('manage client'))
-                                    <li class="pc-item pc-hasmenu {{ in_array($routeName, ['client.index', 'client.show']) ? 'active' : '' }}">
-                                        <a class="pc-link" href="{{ route('client.index') }}">{{ __('Fidelity Insurance') }}</a>
-                                    </li>
-                                @endif
-                                
+                                @endforeach                                
                             </ul>
                         </li>
                     @endif
