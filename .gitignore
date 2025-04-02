@@ -15,6 +15,3 @@ yarn-error.log
 /.vscode
 /dist/
 composer.lock
-storage/cache/*
-storage/sessions/*
-storage/views/*
