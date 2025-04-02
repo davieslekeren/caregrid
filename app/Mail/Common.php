@@ -45,16 +45,20 @@ class   Common extends Mailable
         }
         if (!empty($module) && in_array($module, ['user_create', 'ticket_create', 'ticket_assignment', 'ticket_assignment_update'])) {
             return $this->from($settings['FROM_EMAIL'], $settings['FROM_NAME'])->markdown('email.email_notification')->subject($subject)->with('content', $data);
-        }  elseif (!empty($module) && $module == 'owner_create') {
-            return  $this->from($settings['FROM_EMAIL'], $settings['FROM_NAME'])
-                ->markdown('email.owner_create')
-                ->subject($subject)
-                ->with('content', $data);
-        }else {
+        } elseif (!empty($module) && $module == 'send_email') {
             return  $this->from($settings['FROM_EMAIL'], $settings['FROM_NAME'])
                 ->markdown('email.document')
                 ->subject($subject)
                 ->with('content', $this->data['message']);
+        } elseif (!empty($module) && $module == 'owner_create') {
+            return  $this->from($settings['FROM_EMAIL'], $settings['FROM_NAME'])
+                ->markdown('email.owner_create')
+                ->subject($subject)
+                ->with('content', $data);
+        }else{
+            return $this->from($settings['FROM_EMAIL'], $settings['FROM_NAME'])
+            ->markdown('email.email_notification')
+            ->subject($subject)->with('content', $data);
         }
     }
 }
