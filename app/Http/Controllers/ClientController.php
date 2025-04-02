@@ -120,7 +120,8 @@ class ClientController extends Controller
                 }
             }
 
-            return redirect()->route('client.index',[$client->company])->with('success', __('Client successfully created.'.'</br>'.$errorMessage));
+            $route=$request->type=="br"?'client.company.branches':'client.index';
+            return redirect()->route($route,[$client->company])->with('success', __('Client successfully created.'.'</br>'.$errorMessage));
         } else {
             return redirect()->back()->with('error', __('Permission Denied.'));
         }
@@ -182,7 +183,9 @@ class ClientController extends Controller
                 $client->billing_zip_code=$request->billing_zip_code;
                 $client->save();
             }
-            return redirect()->route('client.index')->with('success', __('Client successfully updated.'));
+            $route=$request->type=="br"?'client.company.branches':'client.index';
+
+            return redirect()->route($route,[$client->company])->with('success', __('Client successfully updated.'));
         } else {
             return redirect()->back()->with('error', __('Permission Denied.'));
         }

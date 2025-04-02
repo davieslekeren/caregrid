@@ -7,14 +7,16 @@ use App\Models\Notification;
 use App\Models\User;
 use App\Models\WorkOrder;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Crypt;
+use Illuminate\Support\Facades\DB;
 
 class InvoiceController extends Controller
 {
 
     public function index()
     {
-        if (\Auth::user()->can('manage invoice')) {
+        if (Auth::user()->can('manage invoice')) {
             $invoices = Invoice::where('parent_id', parentId())->get();
             return view('invoice.index', compact('invoices'));
         } else {
@@ -25,8 +27,11 @@ class InvoiceController extends Controller
 
     public function create()
     {
-        $clients = User::where('parent_id', parentId())->where('type', 'client')->get()->pluck('name', 'id');
-        $clients->prepend(__('Select Client'), '');
+        $clients=DB::table("users")->join("client_details","client_details.user_id","=","users.id")
+        ->where('users.parent_id', parentId())->where('type', 'client')
+        ->select(["users.id",DB::raw('CONCAT(company," - ",name) as name')])->orderBy("company")->get()->pluck("name","id");
+        $clients->prepend(_('Select Client'),'');
+        
         $invoiceNumber=$this->invoiceNumber();
         $status=Invoice::$status;
         return view('invoice.create', compact('clients','invoiceNumber','status'));

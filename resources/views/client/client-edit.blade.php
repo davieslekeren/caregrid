@@ -1,4 +1,5 @@
 {{ Form::model($user, array('route' => array('client.update', $user->id), 'method' => 'PUT')) }}
+<input type="hidden" name="type" value="ca">
 <div class="modal-body">
     <div class="row">
         <div class="form-group col-md-6">

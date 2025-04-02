@@ -421,7 +421,7 @@ class SettingController extends Controller
 
     public function smtpTestMailSend(Request $request)
     {
-        if (\Auth::check()) {
+        if (Auth::check()) {
             $to = $request->email;
             $errorMessage = '';
             // Data for email

@@ -1,5 +1,6 @@
 {{Form::open(array('url'=>'client','method'=>'post'))}}
 <div class="modal-body">
+    <input type="hidden" name="type" value="br">
     <div class="row">
         <div class="form-group col-md-6">
             {{Form::label('name',__('Name'),array('class'=>'form-label')) }} <span class="text-danger">*</span>

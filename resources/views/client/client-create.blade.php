@@ -1,4 +1,5 @@
 {{Form::open(array('url'=>route('client.store'),'method'=>'post'))}}
+<input type="hidden" name="type" value="ca">
 <div class="modal-body">
     <div class="row">
         <div class="form-group col-md-6">

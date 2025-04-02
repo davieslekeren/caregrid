@@ -66,7 +66,7 @@
                                                         data-bs-toggle="tooltip" data-size="lg"
                                                         data-bs-original-title="{{ __('Edit') }}" href="#"
                                                         data-url="{{ route('client.edit', $client->id) }}"
-                                                        data-title="{{ __('Edit Client') }}"> <i data-feather="edit"></i></a>
+                                                        data-title="{{ __($company.' - Edit Branch') }}"> <i data-feather="edit"></i></a>
                                                 @endcan
                                                 @can('delete client')
                                                     <a class=" avtar avtar-xs btn-link-danger text-danger confirm_dialog"

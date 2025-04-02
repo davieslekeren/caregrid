@@ -265,10 +265,10 @@ if (!function_exists('priceFormat')) {
 if (!function_exists('parentId')) {
     function parentId()
     {
-        if (\Auth::user()->type == 'owner' || \Auth::user()->type == 'super admin') {
-            return \Auth::user()->id;
+        if (Auth::user()->type == 'owner' || Auth::user()->type == 'super admin') {
+            return Auth::user()->id;
         } else {
-            return \Auth::user()->parent_id;
+            return Auth::user()->parent_id;
         }
     }
 }
@@ -724,8 +724,9 @@ if (!function_exists('commonEmailSend')) {
                 'status' => 'success',
                 'message' => __('Email successfully sent'),
             ];
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             Log::info($e->getMessage());
+            Log::emergency($e->getTraceAsString());
             return [
                 'status' => 'error',
                 'message' => __('We noticed that the email settings have not been configured for this system. As a result, email-related functionalities may not work as expected. please add valide email smtp details first.')
