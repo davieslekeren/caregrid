@@ -10,7 +10,7 @@
             {{Form::text('asset_number',null,array('class'=>'form-control','placeholder'=>__('Enter Asset Number'),'required'=>'required'))}}
         </div>
         <div class="form-group col-md-6">
-            {{ Form::label('part', __('Part/Place'),['class'=>'form-label']) }} <span class="text-danger">*</span>
+            {{ Form::label('part', __('Part/Place'),['class'=>'form-label']) }}</span>
             {!! Form::select('part', $parts, null,array('class' => 'form-control hidesearch')) !!}
         </div>
         <div class="form-group col-md-6">
@@ -19,7 +19,7 @@
         </div>
 
         <div class="form-group col-md-6">
-            {{Form::label('giai',__('Global Individual Asset Identifier - GIAI'),array('class'=>'form-label')) }} <span class="text-danger">*</span>
+            {{Form::label('giai',__('Global Individual Asset Identifier - GIAI'),array('class'=>'form-label')) }}</span>
             {{Form::text('giai',null,array('class'=>'form-control','placeholder'=>__('Enter GIAI')))}}
         </div>
 
