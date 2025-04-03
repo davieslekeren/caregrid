@@ -2,16 +2,16 @@
 <div class="modal-body">
     <div class="row">
         <div class="form-group col-md-6">
-            {{Form::label('name',__('Name'),array('class'=>'form-label')) }} <span class="text-danger">*</span>
-            {{Form::text('name',null,array('class'=>'form-control','placeholder'=>__('Enter name'),'required'=>'required'))}}
+            {{Form::label('name',__('Asset Name'),array('class'=>'form-label')) }} <span class="text-danger">*</span>
+            {{Form::text('name',null,array('class'=>'form-control','placeholder'=>__('Enter Asset Name'),'required'=>'required'))}}
         </div>
         <div class="form-group col-md-6">
             {{Form::label('asset_number',__('Asset Number'),array('class'=>'form-label'))}} <span class="text-danger">*</span>
-            {{Form::text('asset_number',null,array('class'=>'form-control','placeholder'=>__('Enter asset number'),'required'=>'required'))}}
+            {{Form::text('asset_number',null,array('class'=>'form-control','placeholder'=>__('Enter Asset Number'),'required'=>'required'))}}
         </div>
         <div class="form-group col-md-6">
-            {{ Form::label('part', __('Part'),['class'=>'form-label']) }} <span class="text-danger">*</span>
-            {!! Form::select('part', $parts, null,array('class' => 'form-control hidesearch','required'=>'required')) !!}
+            {{ Form::label('part', __('Part/Place'),['class'=>'form-label']) }} <span class="text-danger">*</span>
+            {!! Form::select('part', $parts, null,array('class' => 'form-control hidesearch')) !!}
         </div>
         <div class="form-group col-md-6">
             {{ Form::label('parent_asset', __('Parent Asset'),['class'=>'form-label']) }}
@@ -19,13 +19,13 @@
         </div>
 
         <div class="form-group col-md-6">
-            {{Form::label('giai',__('GIAI'),array('class'=>'form-label')) }} <span class="text-danger">*</span>
-            {{Form::text('giai',null,array('class'=>'form-control','placeholder'=>__('Enter giai')))}}
+            {{Form::label('giai',__('Global Individual Asset Identifier - GIAI'),array('class'=>'form-label')) }} <span class="text-danger">*</span>
+            {{Form::text('giai',null,array('class'=>'form-control','placeholder'=>__('Enter GIAI')))}}
         </div>
 
         <div class="form-group col-md-6">
             {{Form::label('order_date',__('Order Date'),array('class'=>'form-label')) }} <span class="text-danger">*</span>
-            {{Form::date('order_date',null,array('class'=>'form-control','placeholder'=>__('Enter order date'),'required'=>'required'))}}
+            {{Form::date('order_date',null,array('class'=>'form-control','placeholder'=>__('Enter Order Date'),'required'=>'required'))}}
         </div>
 
         <div class="form-group col-md-6">
@@ -35,7 +35,7 @@
 
         <div class="form-group col-md-6">
             {{Form::label('installation_date',__('Installation Date'),array('class'=>'form-label')) }} <span class="text-danger">*</span>
-            {{Form::date('installation_date',null,array('class'=>'form-control','required'=>'required'))}}
+            {{Form::date('installation_date',null,array('class'=>'form-control'))}}
         </div>
         <div class="form-group col-md-6">
             {{Form::label('warranty_expiration',__('Warranty Expiration'),array('class'=>'form-label')) }}
