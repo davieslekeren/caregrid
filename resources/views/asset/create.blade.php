@@ -19,7 +19,7 @@
         </div>
 
         <div class="form-group col-md-6">
-            {{Form::label('giai',__('Global Individual Asset Identifier - GIAI'),array('class'=>'form-label')) }}</span>
+            {{Form::label('giai',__('Global Individual Asset Identifier - GIAI'),array('class'=>'form-label')) }}
             {{Form::text('giai',null,array('class'=>'form-control','placeholder'=>__('Enter GIAI')))}}
         </div>
 
