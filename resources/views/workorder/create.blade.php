@@ -107,15 +107,12 @@
                             {!! Form::select('type', $woTypes, old('type'),array('class' => 'form-control hidesearch','required'=>'required')) !!}
                         </div>
                         <div class="form-group col-md-6">
-<!--                             {{ Form::label('client', __('Client - Branch Name'),['class'=>'form-label']) }} <span class="text-danger">*</span>
+                            {{ Form::label('client', __('Client - Branch Name'),['class'=>'form-label']) }} <span class="text-danger">*</span>
                             {!! Form::select('client', $clients, old('client'),array('class' => 'form-control hidesearch','required'=>'required')) !!}
- -->
-                            {{ Form::label('client', __('Client - Branch Name'), ['class' => 'form-label']) }} <span class="text-danger">*</span>
-                            {!! Form::select('client', $clients, null, ['class' => 'form-control hidesearch', 'required' => 'required']) !!}
                         </div>
                         <div class="form-group col-md-6">
-                            {{ Form::label('asset', __('Asset'),['class'=>'form-label']) }}
-                            {!! Form::select('asset', $assets, old('asset'),array('class' => 'form-control hidesearch')) !!}
+                            {{ Form::label('asset', __('Asset'),['class'=>'form-label']) }} <span class="text-danger">*</span>
+                            {!! Form::select('asset', $assets, old('asset'),array('class' => 'form-control hidesearch','required'=>'required')) !!}
                         </div>
                         <div class="form-group col-md-6">
                             {{Form::label('due_date',__('Due Date'),array('class'=>'form-label')) }} <span class="text-danger">*</span>
