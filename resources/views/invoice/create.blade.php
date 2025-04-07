@@ -8,7 +8,7 @@
                 <span class="input-group-text ">
                     {{ invoicePrefix() }}
                 </span>
-                {{ Form::text('invoice_id', $invoiceNumber, ['class' => 'form-control', 'placeholder' => __('Enter Invoice Number')]) }}
+                {{ Form::text('invoice_id', $invoiceNumber, ['class' => 'form-control', 'readonly' => 'true', 'placeholder' => __('Enter Invoice Number')]) }}
             </div>
         </div>
         <div class="form-group col-md-6">
@@ -17,7 +17,7 @@
             {{ Form::date('invoice_date', null, ['class' => 'form-control', 'required' => 'required']) }}
         </div>
         <div class="form-group col-md-6">
-            {{ Form::label('client', __('Client'), ['class' => 'form-label']) }} <span class="text-danger">*</span>
+            {{ Form::label('client', __('Client - Branch Name'), ['class' => 'form-label']) }} <span class="text-danger">*</span>
             {!! Form::select('client', $clients, null, ['class' => 'form-control hidesearch', 'required' => 'required']) !!}
         </div>
         <div class="form-group col-md-6">
