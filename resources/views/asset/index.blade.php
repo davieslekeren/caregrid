@@ -58,7 +58,7 @@
                                         <td>{{ $asset->asset_number }} </td>
                                         <td>{{ !empty($asset->parts) ? $asset->parts->title : '-' }} </td>
                                         <td>{{ !empty($asset->parents) ? $asset->parents->name : '-' }} </td>
-                                        <td>{{ $asset->giai }} </td>
+                                        <td>{{ !empty$asset->giai }} </td>
                                         <td>{{ dateFormat($asset->order_date) }} </td>
                                         <td>{{ dateFormat($asset->purchase_date) }} </td>
                                         <td>{{ dateFormat($asset->installation_date) }} </td>
