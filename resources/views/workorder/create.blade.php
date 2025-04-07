@@ -103,12 +103,15 @@
                             {{Form::textarea('wo_detail',old('wo_detail'),array('class'=>'form-control','rows'=>1,'required'=>'required'))}}
                         </div>
                         <div class="form-group col-md-6 col-lg-6">
-                            {{ Form::label('type', __('Type'),['class'=>'form-label']) }} <span class="text-danger">*</span>
+                            {{ Form::label('type', __('Work Order Type'),['class'=>'form-label']) }} <span class="text-danger">*</span>
                             {!! Form::select('type', $woTypes, old('type'),array('class' => 'form-control hidesearch','required'=>'required')) !!}
                         </div>
                         <div class="form-group col-md-6">
-                            {{ Form::label('client', __('Client - Branch Name'),['class'=>'form-label']) }} <span class="text-danger">*</span>
+<!--                             {{ Form::label('client', __('Client - Branch Name'),['class'=>'form-label']) }} <span class="text-danger">*</span>
                             {!! Form::select('client', $clients, old('client'),array('class' => 'form-control hidesearch','required'=>'required')) !!}
+ -->
+                            {{ Form::label('client', __('Client - Branch Name'), ['class' => 'form-label']) }} <span class="text-danger">*</span>
+                            {!! Form::select('client', $clients, null, ['class' => 'form-control hidesearch', 'required' => 'required']) !!}
                         </div>
                         <div class="form-group col-md-6">
                             {{ Form::label('asset', __('Asset'),['class'=>'form-label']) }}
