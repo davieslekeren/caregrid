@@ -18,11 +18,11 @@
             {!! Form::select('parent_asset', $assets, null,array('class' => 'form-control hidesearch')) !!}
         </div>
 
-        <div class="form-group col-md-6">
+<!--         <div class="form-group col-md-6">
             {{Form::label('giai',__('Global Individual Asset Identifier - GIAI'),array('class'=>'form-label')) }}
             {{Form::text('giai',null,array('class'=>'form-control','placeholder'=>__('Enter GIAI')))}}
         </div>
-
+ -->
         <div class="form-group col-md-6">
             {{Form::label('order_date',__('Order Date'),array('class'=>'form-label')) }} <span class="text-danger">*</span>
             {{Form::date('order_date',null,array('class'=>'form-control','placeholder'=>__('Enter Order Date'),'required'=>'required'))}}
