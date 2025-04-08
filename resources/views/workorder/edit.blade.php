@@ -161,34 +161,28 @@
                             {{ Form::textarea('wo_detail', null, ['class' => 'form-control', 'rows' => 1, 'required' => 'required']) }}
                         </div>
                         <div class="form-group col-md-6">
-                            {{ Form::label('type', __('Type'), ['class' => 'form-label']) }} <span
-                                class="text-danger">*</span>
-                            {!! Form::select('type', $woTypes, null, ['class' => 'form-control hidesearch', 'required' => 'required']) !!}
+                            {{ Form::label('type', __('Type'), ['class' => 'form-label']) }}
+                            {!! Form::select('type', $woTypes, null, ['class' => 'form-control hidesearch']) !!}
                         </div>
                         <div class="form-group col-md-6">
-                            {{ Form::label('client', __('Client'), ['class' => 'form-label']) }} <span
-                                class="text-danger">*</span>
+                            {{ Form::label('client', __('Client'), ['class' => 'form-label']) }} <span class="text-danger">*</span>
                             {!! Form::select('client', $clients, null, ['class' => 'form-control hidesearch', 'required' => 'required']) !!}
                         </div>
                         <div class="form-group col-md-6">
-                            {{ Form::label('asset', __('Asset'), ['class' => 'form-label']) }} <span
-                                class="text-danger">*</span>
-                            {!! Form::select('asset', $assets, null, ['class' => 'form-control hidesearch', 'required' => 'required']) !!}
+                            {{ Form::label('asset', __('Asset'), ['class' => 'form-label']) }}
+                            {!! Form::select('asset', $assets, null, ['class' => 'form-control hidesearch']) !!}
                         </div>
                         <div class="form-group col-md-6">
-                            {{ Form::label('due_date', __('Due Date'), ['class' => 'form-label']) }} <span
-                                class="text-danger">*</span>
+                            {{ Form::label('due_date', __('Due Date'), ['class' => 'form-label']) }} <span class="text-danger">*</span>
                             {{ Form::date('due_date', null, ['class' => 'form-control', 'required' => 'required']) }}
                         </div>
                         <div class="form-group col-md-6">
-                            {{ Form::label('priority', __('Priority'), ['class' => 'form-label']) }} <span
-                                class="text-danger">*</span>
+                            {{ Form::label('priority', __('Priority'), ['class' => 'form-label']) }} <span class="text-danger">*</span>
                             {!! Form::select('priority', $priority, null, ['class' => 'form-control hidesearch', 'required' => 'required']) !!}
                         </div>
 
                         <div class="form-group col-md-6">
-                            {{ Form::label('assign', __('Assign'), ['class' => 'form-label']) }} <span
-                                class="text-danger">*</span>
+                            {{ Form::label('assign', __('Assign'), ['class' => 'form-label']) }} <span class="text-danger">*</span>
                             {!! Form::select('assign', $users, null, ['class' => 'form-control hidesearch']) !!}
                         </div>
                         <div class="form-group col-md-6">

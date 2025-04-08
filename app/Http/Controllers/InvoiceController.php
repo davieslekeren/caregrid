@@ -27,10 +27,7 @@ class InvoiceController extends Controller
 
     public function create()
     {
-        $clients=DB::table("users")->join("client_details","client_details.user_id","=","users.id")
-        ->where('users.parent_id', parentId())->where('type', 'client')
-        ->select(["users.id",DB::raw('CONCAT(company," - ",name) as name')])->orderBy("company")->get()->pluck("name","id");
-        $clients->prepend(_('Select Client'),'');
+        $clients=clientBranchForDropDown();
         
         $invoiceNumber=$this->invoiceNumber();
         $status=Invoice::$status;

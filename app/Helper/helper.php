@@ -277,17 +277,17 @@ if (!function_exists('assignSubscription')) {
     {
         $subscription = Subscription::find($id);
         if ($subscription) {
-            \Auth::user()->subscription = $subscription->id;
+            Auth::user()->subscription = $subscription->id;
             if ($subscription->interval == 'Monthly') {
-                \Auth::user()->subscription_expire_date = Carbon::now()->addMonths(1)->isoFormat('YYYY-MM-DD');
+                Auth::user()->subscription_expire_date = Carbon::now()->addMonths(1)->isoFormat('YYYY-MM-DD');
             } elseif ($subscription->interval == 'Quarterly') {
-                \Auth::user()->subscription_expire_date = Carbon::now()->addMonths(3)->isoFormat('YYYY-MM-DD');
+                Auth::user()->subscription_expire_date = Carbon::now()->addMonths(3)->isoFormat('YYYY-MM-DD');
             } elseif ($subscription->interval == 'Yearly') {
-                \Auth::user()->subscription_expire_date = Carbon::now()->addYears(1)->isoFormat('YYYY-MM-DD');
+                Auth::user()->subscription_expire_date = Carbon::now()->addYears(1)->isoFormat('YYYY-MM-DD');
             } else {
-                \Auth::user()->subscription_expire_date = null;
+                Auth::user()->subscription_expire_date = null;
             }
-            \Auth::user()->save();
+            Auth::user()->save();
 
             $users = User::where('parent_id', '=', parentId())->whereNotIn('type', ['super admin', 'owner'])->get();
 
@@ -1923,5 +1923,19 @@ if (!function_exists('authPage')) {
         $createdTemplates[] = $authPage;
 
         return $createdTemplates;
+    }
+}
+
+if (!function_exists('clientBranchForDropDown')) {
+    /**
+     * return Collection
+     */
+    function clientBranchForDropDown(){
+        $clients=DB::table("users")->join("client_details","client_details.user_id","=","users.id")
+        ->where('users.parent_id', parentId())->where('type', 'client')
+        ->select(["users.id",DB::raw('CONCAT(company," - ",name) as name')])->orderBy("company")->get()->pluck("name","id");
+        $clients->prepend(_('Select Client'),'');
+
+        return $clients;
     }
 }

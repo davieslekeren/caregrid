@@ -24,17 +24,17 @@
         </div>
 
         <div class="form-group col-md-6">
-            {{Form::label('order_date',__('Order Date'),array('class'=>'form-label')) }} <span class="text-danger">*</span>
-            {{Form::date('order_date',null,array('class'=>'form-control','placeholder'=>__('Enter Order Date'),'required'=>'required'))}}
+            {{Form::label('order_date',__('Order Date'),array('class'=>'form-label')) }}
+            {{Form::date('order_date',null,array('class'=>'form-control','placeholder'=>__('Enter Order Date')))}}
         </div>
 
         <div class="form-group col-md-6">
-            {{Form::label('purchase_date',__('Purchase Date'),array('class'=>'form-label')) }} <span class="text-danger">*</span>
-            {{Form::date('purchase_date',null,array('class'=>'form-control','required'=>'required'))}}
+            {{Form::label('purchase_date',__('Purchase Date'),array('class'=>'form-label')) }}
+            {{Form::date('purchase_date',null,array('class'=>'form-control'))}}
         </div>
 
         <div class="form-group col-md-6">
-            {{Form::label('installation_date',__('Installation Date'),array('class'=>'form-label')) }} <span class="text-danger">*</span>
+            {{Form::label('installation_date',__('Installation Date'),array('class'=>'form-label')) }}
             {{Form::date('installation_date',null,array('class'=>'form-control'))}}
         </div>
         <div class="form-group col-md-6">

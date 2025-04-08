@@ -10,8 +10,8 @@
             {{Form::text('asset_number',null,array('class'=>'form-control','placeholder'=>__('Enter asset number'),'required'=>'required'))}}
         </div>
         <div class="form-group col-md-6">
-            {{ Form::label('part', __('Part'),['class'=>'form-label']) }} <span class="text-danger">*</span>
-            {!! Form::select('part', $parts, null,array('class' => 'form-control hidesearch','required'=>'required')) !!}
+            {{ Form::label('part', __('Part'),['class'=>'form-label']) }}
+            {!! Form::select('part', $parts, null,array('class' => 'form-control hidesearch')) !!}
         </div>
         <div class="form-group col-md-6">
             {{ Form::label('parent_asset', __('Parent Asset'),['class'=>'form-label']) }}
@@ -19,23 +19,23 @@
         </div>
 
         <div class="form-group col-md-6">
-            {{Form::label('giai',__('GIAI'),array('class'=>'form-label')) }} <span class="text-danger">*</span>
+            {{Form::label('giai',__('GIAI'),array('class'=>'form-label')) }}
             {{Form::text('giai',null,array('class'=>'form-control','placeholder'=>__('Enter giai')))}}
         </div>
 
         <div class="form-group col-md-6">
-            {{Form::label('order_date',__('Order Date'),array('class'=>'form-label')) }} <span class="text-danger">*</span>
-            {{Form::date('order_date',null,array('class'=>'form-control','placeholder'=>__('Enter order date'),'required'=>'required'))}}
+            {{Form::label('order_date',__('Order Date'),array('class'=>'form-label')) }}
+            {{Form::date('order_date',null,array('class'=>'form-control','placeholder'=>__('Enter order date')))}}
         </div>
 
         <div class="form-group col-md-6">
-            {{Form::label('purchase_date',__('Purchase Date'),array('class'=>'form-label')) }} <span class="text-danger">*</span>
-            {{Form::date('purchase_date',null,array('class'=>'form-control','required'=>'required'))}}
+            {{Form::label('purchase_date',__('Purchase Date'),array('class'=>'form-label')) }}
+            {{Form::date('purchase_date',null,array('class'=>'form-control'))}}
         </div>
 
         <div class="form-group col-md-6">
-            {{Form::label('installation_date',__('Installation Date'),array('class'=>'form-label')) }} <span class="text-danger">*</span>
-            {{Form::date('installation_date',null,array('class'=>'form-control','required'=>'required'))}}
+            {{Form::label('installation_date',__('Installation Date'),array('class'=>'form-label')) }}
+            {{Form::date('installation_date',null,array('class'=>'form-control'))}}
         </div>
         <div class="form-group col-md-6">
             {{Form::label('warranty_expiration',__('Warranty Expiration'),array('class'=>'form-label')) }}

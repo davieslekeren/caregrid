@@ -14,14 +14,16 @@ use App\Models\WOServicePart;
 use App\Models\WOServiceTask;
 use App\Models\WOType;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Crypt;
+use Illuminate\Support\Facades\Validator;
 
 class WorkOrderController extends Controller
 {
 
     public function index()
     {
-        if (\Auth::user()->can('manage work order')) {
+        if (Auth::user()->can('manage work order')) {
             $workorders = WorkOrder::where('parent_id', parentId())->get();
             return view('workorder.index', compact('workorders'));
         } else {
@@ -32,11 +34,11 @@ class WorkOrderController extends Controller
 
     public function create()
     {
-        if (\Auth::user()->can('create work order')) {
+        if (Auth::user()->can('create work order')) {
             $woTypes = WOType::where('parent_id', parentId())->get()->pluck('type', 'id');
             $woTypes->prepend(__('Select Type'), '');
 
-            $clients = User::where('parent_id', parentId())->where('type', 'client')->get()->pluck('name', 'id');
+            $clients=clientBranchForDropDown();
             $clients->prepend(__('Select Client'), '');
 
             $users = User::where('parent_id', parentId())->where('type', '!=', 'client')->get()->pluck('name', 'id');
@@ -64,17 +66,17 @@ class WorkOrderController extends Controller
 
     public function store(Request $request)
     {
-        if (\Auth::user()->can('create work order')) {
-            $validator = \Validator::make(
+        if (Auth::user()->can('create work order')) {
+            $validator = Validator::make(
                 $request->all(),
                 [
                     'wo_detail' => 'required',
-                    'type' => 'required',
                     'client' => 'required',
-                    'asset' => 'required',
                     'priority' => 'required',
                     'due_date' => 'required',
                     'assign' => 'required',
+                    'asset' => 'nullable',
+                    'type' => 'nullable',
                 ]
             );
             if ($validator->fails()) {
@@ -85,9 +87,9 @@ class WorkOrderController extends Controller
             $workOrder = new WorkOrder();
             $workOrder->wo_id = $request->wo_id;
             $workOrder->wo_detail = $request->wo_detail;
-            $workOrder->type = $request->type;
+            $workOrder->type = $request->type??0;
             $workOrder->client = $request->client;
-            $workOrder->asset = $request->asset;
+            $workOrder->asset = $request->asset??0;
             $workOrder->priority = $request->priority;
             $workOrder->due_date = $request->due_date;
             $workOrder->status = 'pending';
@@ -232,7 +234,7 @@ class WorkOrderController extends Controller
 
     public function show($id)
     {
-        if (\Auth::user()->can('show work order')) {
+        if (Auth::user()->can('show work order')) {
             $id = Crypt::decrypt($id);
             $workorder = WorkOrder::find($id);
             $status = WorkOrder::$status;
@@ -245,15 +247,14 @@ class WorkOrderController extends Controller
 
     public function edit($id)
     {
-        if (\Auth::user()->can('create work order')) {
+        if (Auth::user()->can('create work order')) {
 
             $id = Crypt::decrypt($id);
             $workOrder = WorkOrder::find($id);
             $woTypes = WOType::where('parent_id', parentId())->get()->pluck('type', 'id');
             $woTypes->prepend(__('Select Type'), '');
 
-            $clients = User::where('parent_id', parentId())->where('type', 'client')->get()->pluck('name', 'id');
-            $clients->prepend(__('Select Client'), '');
+            $clients =clientBranchForDropDown();
 
             $users = User::where('parent_id', parentId())->where('type', '!=', 'client')->get()->pluck('name', 'id');
             $users->prepend(__('Select User'), '');
@@ -306,17 +307,17 @@ class WorkOrderController extends Controller
 
     public function update(Request $request, $id)
     {
-        if (\Auth::user()->can('edit work order')) {
-            $validator = \Validator::make(
+        if (Auth::user()->can('edit work order')) {
+            $validator = Validator::make(
                 $request->all(),
                 [
                     'wo_detail' => 'required',
-                    'type' => 'required',
                     'client' => 'required',
-                    'asset' => 'required',
                     'priority' => 'required',
                     'due_date' => 'required',
                     'assign' => 'required',
+                    'asset' => 'nullable',
+                    'type' => 'nullable',
                 ]
             );
             if ($validator->fails()) {
@@ -329,9 +330,9 @@ class WorkOrderController extends Controller
 
             $workOrder->wo_id = $request->wo_id;
             $workOrder->wo_detail = $request->wo_detail;
-            $workOrder->type = $request->type;
+            $workOrder->type = $request->type??0;
             $workOrder->client = $request->client;
-            $workOrder->asset = $request->asset;
+            $workOrder->asset = $request->asset??0;
             $workOrder->priority = $request->priority;
             $workOrder->due_date = $request->due_date;
             $workOrder->assign = $request->assign;

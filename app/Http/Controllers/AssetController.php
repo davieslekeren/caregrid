@@ -6,13 +6,15 @@ use App\Models\Asset;
 use App\Models\Notification;
 use App\Models\ServicePart;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Validator;
 
 class AssetController extends Controller
 {
 
     public function index()
     {
-        if (\Auth::user()->can('manage asset')) {
+        if (Auth::user()->can('manage asset')) {
             $assets = Asset::where('parent_id', parentId())->get();
             return view('asset.index', compact('assets'));
         } else {
@@ -34,16 +36,16 @@ class AssetController extends Controller
 
     public function store(Request $request)
     {
-        if (\Auth::user()->can('create asset')) {
-            $validator = \Validator::make(
+        if (Auth::user()->can('create asset')) {
+            $validator = Validator::make(
                 $request->all(), [
                     'name' => 'required',
                     'asset_number' => 'required',
-                    'part' => 'required',
-                    'giai' => 'required',
-                    'order_date' => 'required',
-                    'installation_date' => 'required',
-                    'purchase_date' => 'required',
+                    'part' => 'nullable',
+                    'giai' => 'nullable',
+                    'order_date' => 'nullable',
+                    'installation_date' => 'nullable',
+                    'purchase_date' => 'nullable',
                 ]
             );
             if ($validator->fails()) {
@@ -54,7 +56,7 @@ class AssetController extends Controller
             $asset = new Asset();
             $asset->name = $request->name;
             $asset->asset_number = $request->asset_number;
-            $asset->part = $request->part;
+            $asset->part = $request->part??0;
             $asset->parent_asset = !empty($request->parent_asset)?$request->parent_asset:0;
             $asset->giai = $request->giai;
             $asset->order_date = $request->order_date;
@@ -93,16 +95,16 @@ class AssetController extends Controller
 
     public function update(Request $request, Asset $asset)
     {
-        if (\Auth::user()->can('edit asset')) {
-            $validator = \Validator::make(
+        if (Auth::user()->can('edit asset')) {
+            $validator = Validator::make(
                 $request->all(), [
                     'name' => 'required',
                     'asset_number' => 'required',
-                    'part' => 'required',
-                    'giai' => 'required',
-                    'order_date' => 'required',
-                    'installation_date' => 'required',
-                    'purchase_date' => 'required',
+                    'part' => 'nullable',
+                    'giai' => 'nullable',
+                    'order_date' => 'nullable',
+                    'installation_date' => 'nullable',
+                    'purchase_date' => 'nullable',
                 ]
             );
             if ($validator->fails()) {
@@ -113,7 +115,7 @@ class AssetController extends Controller
 
             $asset->name = $request->name;
             $asset->asset_number = $request->asset_number;
-            $asset->part = $request->part;
+            $asset->part = $request->part??0;
             $asset->parent_asset = !empty($request->parent_asset)?$request->parent_asset:0;
             $asset->giai = $request->giai;
             $asset->order_date = $request->order_date;
@@ -133,7 +135,7 @@ class AssetController extends Controller
 
     public function destroy(Asset $asset)
     {
-        if (\Auth::user()->can('delete asset')) {
+        if (Auth::user()->can('delete asset')) {
             $asset->delete();
             return redirect()->route('asset.index')->with('success', __('Asset successfully deleted.'));
         } else {
