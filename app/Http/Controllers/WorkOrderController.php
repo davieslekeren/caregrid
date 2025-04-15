@@ -77,6 +77,8 @@ class WorkOrderController extends Controller
                     'assign' => 'required',
                     'asset' => 'nullable',
                     'type' => 'nullable',
+                    'project_title' => 'nullable',
+                    'project_location' => 'nullable',
                 ]
             );
             if ($validator->fails()) {
@@ -99,6 +101,8 @@ class WorkOrderController extends Controller
             $workOrder->preferred_time = !empty($request->preferred_time) ? $request->preferred_time : null;
             $workOrder->preferred_note = !empty($request->preferred_note) ? $request->preferred_note : null;
             $workOrder->parent_id = parentId();
+            $workOrder->project_title = $request->project_title;
+            $workOrder->project_location = $request->project_location;
             $workOrder->save();
 
             $services = !empty($request->services) ? $request->services : [];
@@ -318,6 +322,8 @@ class WorkOrderController extends Controller
                     'assign' => 'required',
                     'asset' => 'nullable',
                     'type' => 'nullable',
+                    'project_title' => 'nullable',
+                    'project_location' => 'nullable',
                 ]
             );
             if ($validator->fails()) {
@@ -340,6 +346,8 @@ class WorkOrderController extends Controller
             $workOrder->preferred_date = !empty($request->preferred_date) ? $request->preferred_date : null;
             $workOrder->preferred_time = !empty($request->preferred_time) ? $request->preferred_time : null;
             $workOrder->preferred_note = !empty($request->preferred_note) ? $request->preferred_note : null;
+            $workOrder->project_title = $request->project_title;
+            $workOrder->project_location = $request->project_location;
             $workOrder->save();
 
             $services = !empty($request->services) ? $request->services : [];

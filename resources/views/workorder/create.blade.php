@@ -91,29 +91,21 @@
                                 {{Form::label('wo_id',__('Workorder Number'),array('class'=>'form-label'))}}
                                 <span class="text-danger">*</span>
                                 <div class="input-group">
-                                        <span class="input-group-text ">
-                                          {{workOrderPrefix()}}
-                                        </span>
+                                    <span class="input-group-text "> {{workOrderPrefix()}} </span>
                                     {{Form::text('wo_id',$workOrderNumber,array('class'=>'form-control', 'readonly' => 'true','placeholder'=>__('Enter Workorder Number')))}}
                                 </div>
                             </div>
                         </div>
+
                         <div class="form-group col-md-6 col-lg-6">
                             {{Form::label('wo_detail',__('WO Detail'),array('class'=>'form-label')) }} <span class="text-danger">*</span>
                             {{Form::textarea('wo_detail',old('wo_detail'),array('class'=>'form-control','rows'=>1,'required'=>'required'))}}
-                        </div>
-                        <div class="form-group col-md-6 col-lg-6">
-                            {{ Form::label('type', __('Work Order Type'),['class'=>'form-label']) }}
-                            {!! Form::select('type', $woTypes, old('type'),array('class' => 'form-control hidesearch')) !!}
                         </div>
                         <div class="form-group col-md-6">
                             {{ Form::label('client', __('Client - Branch Name'),['class'=>'form-label']) }} <span class="text-danger">*</span>
                             {!! Form::select('client', $clients, old('client'),array('class' => 'form-control hidesearch','required'=>'required')) !!}
                         </div>
-                        <div class="form-group col-md-6">
-                            {{ Form::label('asset', __('Asset'),['class'=>'form-label']) }}
-                            {!! Form::select('asset', $assets, old('asset'),array('class' => 'form-control hidesearch')) !!}
-                        </div>
+
                         <div class="form-group col-md-6">
                             {{Form::label('due_date',__('Due Date'),array('class'=>'form-label')) }} <span class="text-danger">*</span>
                             {{Form::date('due_date',old('due_date'),array('class'=>'form-control','required'=>'required'))}}
@@ -126,6 +118,23 @@
                         <div class="form-group col-md-6">
                             {{ Form::label('assign', __('Assign'),['class'=>'form-label']) }} <span class="text-danger">*</span>
                             {!! Form::select('assign', $users, old('assign'),array('class' => 'form-control hidesearch')) !!}
+                        </div>
+
+                        <div class="form-group col-md-6 col-lg-6">
+                            {{Form::label('project_title',__('Project Title'),array('class'=>'form-label'))}}
+                             {{Form::text('project_title',old('project_title'),array('class'=>'form-control','placeholder'=>__('Enter Project Title')))}}
+                        </div>
+                        <div class="form-group col-md-6 col-lg-6">
+                            {{Form::label('project_location',__('Project Location'),array('class'=>'form-label'))}}
+                             {{Form::text('project_location',old('project_location'),array('class'=>'form-control','placeholder'=>__('Enter Project Location')))}}
+                        </div>
+                        <div class="form-group col-md-6 col-lg-6">
+                            {{ Form::label('type', __('Work Order Type'),['class'=>'form-label']) }}
+                            {!! Form::select('type', $woTypes, old('type'),array('class' => 'form-control hidesearch')) !!}
+                        </div>
+                        <div class="form-group col-md-6">
+                            {{ Form::label('asset', __('Asset'),['class'=>'form-label']) }}
+                            {!! Form::select('asset', $assets, old('asset'),array('class' => 'form-control hidesearch')) !!}
                         </div>
                         <div class="form-group col-md-6">
                             {{Form::label('notes',__('Notes'),array('class'=>'form-label')) }}

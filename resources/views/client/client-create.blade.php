@@ -17,7 +17,7 @@
     </div>
     <div class=" col-md-12 mb-20">
         <hr>
-        <h5> {{__('Branch/Site Address')}}</h5>
+        <h5> {{__('Site Address')}}</h5>
         <hr>
     </div>
     <div class="row">
@@ -46,7 +46,7 @@
             {{Form::textarea('service_address',null,array('class'=>'form-control','rows'=>2,'placeholder'=>__('Enter service address'),'required'=>'required'))}}
         </div>
     </div>
-    <div class=" col-md-12 mb-20">
+    {{-- <div class=" col-md-12 mb-20">
         <div class="form-group">
             <div class="form-check custom-chek">
                 <input class="form-check-input" type="checkbox" value="billing_info" id="billing_info" name="billing_info">
@@ -75,7 +75,7 @@
             {{Form::label('billing_address',__('Address'),array('class'=>'form-label'))}}
             {{Form::textarea('billing_address',null,array('class'=>'form-control','rows'=>2,'placeholder'=>__('Enter billing address')))}}
         </div>
-    </div>
+    </div> --}}
 </div>
 <div class="modal-footer">
     {{Form::submit(__('Create'),array('class'=>'btn btn-secondary ml-10'))}}

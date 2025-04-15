@@ -40,9 +40,7 @@
                     @if (Gate::check('manage user') || Gate::check('manage role') || Gate::check('manage logged history'))
                         <li class="pc-item pc-hasmenu {{ in_array($routeName, ['users.index', 'logged.history', 'role.index', 'role.create', 'role.edit']) ? 'pc-trigger active' : '' }}">
                             <a href="#!" class="pc-link">
-                                <span class="pc-micon">
-                                    <i class="ti ti-users"></i>
-                                </span>
+                                <span class="pc-micon"><i class="ti ti-users"></i></span>
                                 <span class="pc-mtext">{{ __('Staff Management') }}</span>
                                 <span class="pc-arrow"><i data-feather="chevron-right"></i></span>
                             </a>
@@ -85,17 +83,12 @@
                                 <span class="pc-mtext">{{ __('Clients') }}</span>
                                 <span class="pc-arrow"><i data-feather="chevron-right"></i></span>
                             </a>
-                            <ul class="pc-submenu" style="display: {{ in_array($routeName, ['client.index', 'client.show','client..company.branches']) ? 'active' : '' }}">
-                                {{-- <li class="pc-item {{ in_array($routeName, ['client.index']) ? 'active' : '' }}">
-                                    <a class="pc-link customModal" href="#" data-url="{{ route('client.create') }}" data-title="{{ __('Create Client') }}"> 
-                                        {{ __('Add Client') }}
-                                    </a>
-                                </li> --}}
+                            <ul class="pc-submenu" style="display: {{ in_array($routeName, ['client.index', 'client.show','client..company.branches']) ? 'active' : '' }}">                                
                                 <li class="pc-item {{ in_array($routeName, ['client.index']) ? 'active' : '' }}">
                                     <a class="pc-link" href="{{ route('client.index') }}"> {{ __('Manage All') }}</a>
                                 </li>
                                 @foreach ($companies as $company)
-                                    <li class="pc-item {{ in_array($routeName, ['client.company.branches']) ? 'active' : '' }}">
+                                    <li class="pc-item {{ in_array($routeName, ['client.company.branches']) && request()->segment(3)==$company->company ? 'active' : '' }}">
                                         <a class="pc-link" href="{{ route('client.company.branches',[$company->company]) }}">{{ $company->company }}</a>
                                     </li>
                                 @endforeach                                

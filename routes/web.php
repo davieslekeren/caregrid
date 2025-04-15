@@ -272,6 +272,7 @@ Route::group(["prefix"=>'client','as'=>"client.",'middleware'=>[ 'auth','XSS']],
     Route::get("company/hq/create",[ClientController::class,'createHQ'])->name("company.hq.create");
     Route::get("company/hq/edit/{id}",[ClientController::class,'editHQ'])->name("company.hq.edit");
     Route::get("company/{name}",[ClientController::class,'listBranches'])->name("company.branches");
+    //Route::delete("branch/destroy/{id}",[ClientController::class,'destroyBranch'])->name("branch.destroy");
 });
 
 //-------------------------------Services & Parts-------------------------------------------

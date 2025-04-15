@@ -19,7 +19,7 @@
 
     <div class=" col-md-12 mb-20">
         <hr>
-        <h5> {{__('Branch/Site Address')}}</h5>
+        <h5> {{__('Site Address')}}</h5>
         <hr>
     </div>
 
@@ -49,7 +49,8 @@
             {{Form::textarea('service_address',!empty($user->clients)?$user->clients->service_address:'',array('class'=>'form-control','rows'=>2,'placeholder'=>__('Enter service address'),'required'=>'required'))}}
         </div>
     </div>
-    <div class=" col-md-12 mb-20">
+
+    {{-- <div class=" col-md-12 mb-20">
         <h5> {{__('Billing Address')}}</h5>
     </div>
     <div class="row ">
@@ -73,7 +74,7 @@
             {{Form::label('billing_address',__('Address'),array('class'=>'form-label'))}}
             {{Form::textarea('billing_address',!empty($user->clients)?$user->clients->billing_address:'',array('class'=>'form-control','rows'=>2,'placeholder'=>__('Enter billing address')))}}
         </div>
-    </div>
+    </div> --}}
 </div>
 <div class="modal-footer">
     {{Form::submit(__('Update'),array('class'=>'btn btn-secondary ml-10'))}}

@@ -4,6 +4,7 @@ use App\Mail\Common;
 use App\Mail\EmailVerification;
 use App\Mail\TestMail;
 use App\Models\AuthPage;
+use App\Models\ClientDetail;
 use App\Models\Custom;
 use App\Models\FAQ;
 use App\Models\HomePage;
@@ -1939,3 +1940,10 @@ if (!function_exists('clientBranchForDropDown')) {
         return $clients;
     }
 }
+
+if(!function_exists('getCompanies')){
+    function getCompanies(){
+        return  ClientDetail::all()->unique('company');
+    }
+}
+

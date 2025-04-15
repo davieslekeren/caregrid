@@ -41,6 +41,7 @@
                                 <tr>
                                     <th>{{ __('ID') }}</th>
                                     <th>{{ __('Detail') }}</th>
+                                    <th>{{ __('Project') }}</th>
                                     <th>{{ __('Type') }}</th>
                                     <th>{{ __('Client') }}</th>
                                     <th>{{ __('Asset') }}</th>
@@ -57,6 +58,7 @@
                                     <tr>
                                         <td>{{ workOrderPrefix() . $workorder->wo_id }} </td>
                                         <td>{{ $workorder->wo_detail }} </td>
+                                        <td>{!! empty($workorder->project_title)?$workorder->project_location:($workorder->project_title.(empty($workorder->project_location)?"": "<br>".$workorder->project_location)) !!} </td>
                                         <td>{{ !empty($workorder->types) ? $workorder->types->type : '-' }} </td>
                                         <td>{{ !empty($workorder->clients) ? $workorder->clients->name : '-' }} </td>
                                         <td>{{ !empty($workorder->assets) ? $workorder->assets->name : '-' }} </td>

@@ -49,9 +49,9 @@
                                     <tr>
                                         <td>{{ clientPrefix() }}{{ !empty($client->clients) ? $client->clients->client_id : '' }}
                                         </td>
-                                        <td>{{ $client->name }} </td>
-                                        <td>{{ $client->email }} </td>
-                                        <td>{{ !empty($client->phone_number) ? $client->phone_number : '-' }} </td>
+                                        <td>{{ $client->clients->branch_name??$client->name }} </td>
+                                        <td>{{ $client->clients->branch_email??$client->email }} </td>
+                                        <td>{{ $client->clients->branch_phone_numner??(!empty($client->phone_number) ? $client->phone_number : '-') }} </td>
                                         <td>
                                             <div class="cart-action">
                                                 {!! Form::open(['method' => 'DELETE', 'route' => ['client.destroy', $client->id]]) !!}
@@ -75,11 +75,9 @@
                                                 @endcan
                                                 {!! Form::close() !!}
                                             </div>
-
                                         </td>
                                     </tr>
                                 @endforeach
-
                             </tbody>
                         </table>
                     </div>

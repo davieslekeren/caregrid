@@ -20,31 +20,31 @@
         </div>
     </div>
     <div class=" col-md-12 mb-20">
-        <h5> {{__('Service Address')}}</h5>
+        <h5> {{__('Address')}}</h5>
     </div>
     <div class="row">
         <div class="form-group col-md-6">
-            {{Form::label('service_city',__('City'),array('class'=>'form-label')) }} <span class="text-danger">*</span>
-            {{Form::text('service_city',!empty($user->clients)?$user->clients->service_city:'',array('class'=>'form-control','placeholder'=>__('Enter service city'),'required'=>'required'))}}
+            {{Form::label('service_city',__('City'),array('class'=>'form-label')) }} 
+            {{Form::text('service_city',!empty($user->clients)?$user->clients->service_city:'',array('class'=>'form-control','placeholder'=>__('Enter service city')))}}
         </div>
         <div class="form-group col-md-6">
-            {{Form::label('service_state',__('State'),array('class'=>'form-label'))}} <span class="text-danger">*</span>
-            {{Form::text('service_state',!empty($user->clients)?$user->clients->service_state:'',array('class'=>'form-control','placeholder'=>__('Enter service state'),'required'=>'required'))}}
+            {{Form::label('service_state',__('State'),array('class'=>'form-label'))}}
+            {{Form::text('service_state',!empty($user->clients)?$user->clients->service_state:'',array('class'=>'form-control','placeholder'=>__('Enter service state')))}}
         </div>
         <div class="form-group col-md-6">
-            {{Form::label('service_country',__('Country'),array('class'=>'form-label'))}} <span class="text-danger">*</span>
-            {{Form::text('service_country',!empty($user->clients)?$user->clients->service_country:'',array('class'=>'form-control','placeholder'=>__('Enter service country'),'required'=>'required'))}}
+            {{Form::label('service_country',__('Country'),array('class'=>'form-label'))}}
+            {{Form::text('service_country',!empty($user->clients)?$user->clients->service_country:'',array('class'=>'form-control','placeholder'=>__('Enter service country')))}}
         </div>
         <div class="form-group col-md-6">
-            {{Form::label('service_zip_code',__('Zip Code'),array('class'=>'form-label'))}} <span class="text-danger">*</span>
-            {{Form::text('service_zip_code',!empty($user->clients)?$user->clients->service_zip_code:'',array('class'=>'form-control','placeholder'=>__('Enter service zip code'),'required'=>'required'))}}
+            {{Form::label('service_zip_code',__('Zip Code'),array('class'=>'form-label'))}}
+            {{Form::text('service_zip_code',!empty($user->clients)?$user->clients->service_zip_code:'',array('class'=>'form-control','placeholder'=>__('Enter service zip code')))}}
         </div>
         <div class="form-group col-md-12">
-            {{Form::label('service_address',__('Address'),array('class'=>'form-label'))}} <span class="text-danger">*</span>
-            {{Form::textarea('service_address',!empty($user->clients)?$user->clients->service_address:'',array('class'=>'form-control','rows'=>2,'placeholder'=>__('Enter service address'),'required'=>'required'))}}
+            {{Form::label('service_address',__('Address'),array('class'=>'form-label'))}}
+            {{Form::textarea('service_address',!empty($user->clients)?$user->clients->service_address:'',array('class'=>'form-control','rows'=>2,'placeholder'=>__('Enter service address')))}}
         </div>
     </div>
-    <div class=" col-md-12 mb-20">
+    {{-- <div class=" col-md-12 mb-20">
         <h5> {{__('Billing Address')}}</h5>
     </div>
     <div class="row ">
@@ -68,7 +68,7 @@
             {{Form::label('billing_address',__('Address'),array('class'=>'form-label'))}}
             {{Form::textarea('billing_address',!empty($user->clients)?$user->clients->billing_address:'',array('class'=>'form-control','rows'=>2,'placeholder'=>__('Enter billing address')))}}
         </div>
-    </div>
+    </div> --}}
 </div>
 <div class="modal-footer">
     {{Form::submit(__('Update'),array('class'=>'btn btn-secondary ml-10'))}}

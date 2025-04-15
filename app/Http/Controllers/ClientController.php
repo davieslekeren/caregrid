@@ -10,6 +10,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Validator;
 use Spatie\Permission\Models\Role;
 
@@ -19,7 +20,7 @@ class ClientController extends Controller
     public function index()
     {
         if (Auth::user()->can('manage client')) {
-            $companies = ClientDetail::all()->unique('company');
+            $companies =getCompanies();
             return view('client.companies', compact('companies'));
         } else {
             return redirect()->back()->with('error', __('Permission Denied.'));
@@ -30,7 +31,8 @@ class ClientController extends Controller
 
     public function create($company)
     {
-        return view('client.create',compact('company'));
+        $client=User::where('parent_id', parentId())->where('type','client')->whereHas("clients",fn($q) => $q->where("company","like",$company))->first();
+        return view('client.create',compact('company','client'));
     }
 
 
@@ -40,12 +42,12 @@ class ClientController extends Controller
             $validator = Validator::make(
                 $request->all(), [
                     'name' => 'required',
-                    'email' => 'required|email|unique:users',
-                    'service_address' => 'required',
-                    'service_city' => 'required',
-                    'service_state' => 'required',
-                    'service_country' => 'required',
-                    'service_zip_code' => 'required',
+                    'email' => 'required|email',
+                    'service_address' => 'nullable',
+                    'service_city' => 'nullable',
+                    'service_state' => 'nullable',
+                    'service_country' => 'nullable',
+                    'service_zip_code' => 'nullable',
                 ]
             );
             if ($validator->fails()) {
@@ -60,45 +62,51 @@ class ClientController extends Controller
             if ($totalClient >= $subscription->client_limit && $subscription->client_limit != 0) {
                 return redirect()->back()->with('error', __('Your client limit is over, please upgrade your subscription.'));
             }
-            $userRole = Role::where('parent_id',parentId())->where('name','client')->first();
-            $user = new User();
-            $user->name = $request->name;
-            $user->email = $request->email;
-            $user->phone_number = $request->phone_number;
-            $user->password = Hash::make(123456);
-            $user->type = $userRole->name;
-            $user->profile = 'avatar.png';
-            $user->lang = 'english';
-            $user->parent_id = parentId();
-            $user->save();
-            $user->assignRole($userRole);
+            
+            //$user =User::where('parent_id', parentId())->where('type','client')->whereHas("clients",fn($q) => $q->where("company","like",$request->company))->first();
+            //if(empty($user)){                
+                $userRole = Role::where('parent_id',parentId())->where('name','client')->first();
+                $user = new User();
+                $user->name = $request->name;
+                $user->email = $request->email;
+                $user->phone_number = $request->phone_number;
+                $user->password = Hash::make(123456);
+                $user->type = $userRole->name;
+                $user->profile = 'avatar.png';
+                $user->lang = 'english';
+                $user->parent_id = parentId();
+                $user->save();
+                $user->assignRole($userRole);
+            //}
 
-            if(!empty($user)){
-                $client=new ClientDetail();
-                $client->client_id=$this->clientNumber();
-                $client->user_id=$user->id;
-                $client->company=$request->company;
-                $client->service_address=$request->service_address;
-                $client->service_city=$request->service_city;
-                $client->service_state=$request->service_state;
-                $client->service_country=$request->service_country;
-                $client->service_zip_code=$request->service_zip_code;
-                if(isset($request->billing_info)){
-                    $client->billing_address=$request->billing_address;
-                    $client->billing_city=$request->billing_city;
-                    $client->billing_state=$request->billing_state;
-                    $client->billing_country=$request->billing_country;
-                    $client->billing_zip_code=$request->billing_zip_code;
-                }else{
-                    $client->billing_address=$request->service_address;
-                    $client->billing_city=$request->service_city;
-                    $client->billing_state=$request->service_state;
-                    $client->billing_country=$request->service_country;
-                    $client->billing_zip_code=$request->service_zip_code;
-                }
-                $client->parent_id=parentId();
-                $client->save();
+            $client=new ClientDetail();
+            $client->client_id=$this->clientNumber();
+            $client->user_id=$user->id;
+            $client->company=$request->company;
+            $client->service_address=$request->service_address;
+            $client->service_city=$request->service_city;
+            $client->service_state=$request->service_state;
+            $client->service_country=$request->service_country;
+            $client->service_zip_code=$request->service_zip_code;
+            $client->branch_name=$request->name;
+            $client->branch_email=$request->email;
+            $client->branch_phone=$request->phone_number;
+            if(isset($request->billing_info)){
+                $client->billing_address=$request->billing_address;
+                $client->billing_city=$request->billing_city;
+                $client->billing_state=$request->billing_state;
+                $client->billing_country=$request->billing_country;
+                $client->billing_zip_code=$request->billing_zip_code;
+            }else{
+                $client->billing_address=$request->service_address;
+                $client->billing_city=$request->service_city;
+                $client->billing_state=$request->service_state;
+                $client->billing_country=$request->service_country;
+                $client->billing_zip_code=$request->service_zip_code;
             }
+            $client->parent_id=parentId();
+            $client->save();
+            
 
             $module = 'client_create';
             $notification = Notification::where('parent_id', parentId())->where('module', $module)->first();
@@ -150,11 +158,11 @@ class ClientController extends Controller
                 $request->all(), [
                     'name' => 'required',
                     'email' => 'required|email|unique:users,email,' . $id,
-                    'service_address' => 'required',
-                    'service_city' => 'required',
-                    'service_state' => 'required',
-                    'service_country' => 'required',
-                    'service_zip_code' => 'required',
+                    'service_address' => 'nullable',
+                    'service_city' => 'nullable',
+                    'service_state' => 'nullable',
+                    'service_country' => 'nullable',
+                    'service_zip_code' => 'nullable',
 
                 ]
             );
@@ -181,6 +189,9 @@ class ClientController extends Controller
                 $client->billing_state=$request->billing_state;
                 $client->billing_country=$request->billing_country;
                 $client->billing_zip_code=$request->billing_zip_code;
+                $client->branch_name=$request->name;
+                $client->branch_email=$request->email;
+                $client->branch_phone=$request->phone_number;
                 $client->save();
             }
             $route=$request->type=="br"?'client.company.branches':'client.index';
@@ -194,7 +205,7 @@ class ClientController extends Controller
 
     public function destroy($id)
     {
-        if (\Auth::user()->can('delete client')) {
+        if (Auth::user()->can('delete client')) {
             $user = User::find($id);
             $user->delete();
             ClientDetail::where('user_id',$id)->delete();
@@ -220,6 +231,7 @@ class ClientController extends Controller
             $clients = User::with(['clients'])->where('parent_id', parentId())
             ->where('type','client')
             ->whereHas("clients",fn($q) => $q->where("company","like",$company))->get();
+
             return view('client.index', compact('clients','company'));
         } else {
             return redirect()->back()->with('error', __('Permission Denied.'));
@@ -238,4 +250,13 @@ class ClientController extends Controller
         return view('client.client-edit',compact('user'));
     }
 
+    public function destroyBranch($client_id){
+        if (Auth::user()->can('delete client')) {
+            $client = ClientDetail::find($client_id);
+            $client->delete();
+            return redirect()->back()->with('success', __('Client successfully deleted.'));
+        } else {
+            return redirect()->back()->with('error', __('Permission denied.'));
+        }
+    }
 }
