@@ -108,20 +108,25 @@
 
                                                         <h6>
                                                             {{ __('Assign To') }} :
-                                                            <span
-                                                                class="text-muted f-w-400">{{ !empty($workorder->assigned) ? $workorder->assigned->name : '-' }}
-                                                            </span>
+                                                            <span class="text-muted f-w-400">{{ !empty($workorder->assigned) ? $workorder->assigned->name : '-' }}</span>
+                                                        </h6>
+                                                        <h6>
+                                                            {{ __('Project') }} :
+                                                            <span class="text-muted f-w-400">{{ !empty($workorder->project_title) ? $workorder->project_title : '-' }}</span>
+                                                        </h6>
+                                                        <h6>
+                                                            {{ __('Location') }} :
+                                                            <span class="text-muted f-w-400">{{ !empty($workorder->project_location) ? $workorder->project_location : '-' }}</span>
                                                         </h6>
                                                         <h6>
                                                             {{ __('Asset') }} :
-                                                            <span
-                                                                class="text-muted f-w-400">{{ !empty($workorder->assets) ? $workorder->assets->name : '-' }}</span>
+                                                            <span class="text-muted f-w-400">{{ !empty($workorder->assets) ? $workorder->assets->name : '-' }}</span>
                                                         </h6>
                                                         <h6>
                                                             {{ __('Type') }} :
-                                                            <span
-                                                                class="text-muted f-w-400">{{ !empty($workorder->types) ? $workorder->types->type : '-' }}</span>
+                                                            <span class="text-muted f-w-400">{{ !empty($workorder->types) ? $workorder->types->type : '-' }}</span>
                                                         </h6>
+                                                        
                                                         <h6>
                                                             {{ __('Due Date') }} :
                                                             <span
@@ -296,7 +301,12 @@
                                             </div>
 
                                             <div class="card-body p-3">
+                                                @if (\Auth::user()->type == 'owner' || $workorder->assign == \Auth::user()->id)                                                
+
                                                 <div class="rounded p-3 bg-light-secondary">
+                                                    <div class="text-center mb-3 d-none" id="loading">
+                                                        <i class="fa fa-spinner fa-spin fa-3x"></i>
+                                                    </div>
                                                     <div class="row justify-content-end">
                                                         <div class="col-auto">
                                                             <div class="table-responsive">
@@ -327,45 +337,36 @@
                                                             {{ __('Notes') }} : <p>{{ $workorder->notes }}</p>
                                                         @endif
                                                     </div>
-                                                    @if (\Auth::user()->type == 'owner')
-                                                        <div class="row mb-2">
-                                                            @foreach ($status as $k => $val)
-                                                                <div class="col-md-3 col-xxl-2">
-                                                                    <div class="card border p-3">
-                                                                        <div class="form-check">
-                                                                            <input
-                                                                                class="form-check-input estimationStatusChange"
-                                                                                type="radio"
-                                                                                value="{{ $k }}"
-                                                                                {{ $workorder->status == $k ? 'checked' : '' }}
-                                                                                id="{{ $val }}"
-                                                                                data-url="{{ route('estimation.status', $workorder->id) }}"
-                                                                                name="status"></span>
+                                                    <div class="row mb-2">
+                                                        @foreach ($status as $k => $val)
+                                                            <div class="col-md-3 col-xxl-2">
+                                                                <div class="card border p-3">
+                                                                    <div class="form-check">
+                                                                        <input
+                                                                            class="form-check-input estimationStatusChange"
+                                                                            type="radio" value="{{ $k }}"
+                                                                            {{ $workorder->status == $k ? 'checked' : '' }}
+                                                                            id="{{ $val }}"
+                                                                            data-url="{{ route('workorder.status', $workorder->id) }}"
+                                                                            name="status"></span>
 
 
-                                                                            <label class="form-check-label d-block"
-                                                                                for="{{ $val }}">
-                                                                                <span
-                                                                                    class="h5 mb-0 d-block mt-1">{{ $val }}</span>
-
-                                                                            </label>
-                                                                        </div>
+                                                                        <label class="form-check-label d-block" for="{{ $val }}">
+                                                                            <span class="h5 mb-0 d-block mt-1">{{ $val }}</span>
+                                                                        </label>
                                                                     </div>
                                                                 </div>
-                                                            @endforeach
-                                                        </div>
-                                                    @endif
+                                                            </div>
+                                                        @endforeach
+                                                    </div>
                                                 </div>
+                                                @endif
                                             </div>
                                         </div>
                                     </div>
-
-
                                 </div>
                             </div>
                         </div>
-
-
 
                         <div class="tab-pane" id="profile-2" role="tabpanel" aria-labelledby="profile-tab-2">
                             <div class="card border">
@@ -454,8 +455,6 @@
 
                         </div>
 
-
-
                         <div class="tab-pane" id="profile-3" role="tabpanel" aria-labelledby="profile-tab-3">
                             <div class="card border">
                                 <div class="card-header">
@@ -543,11 +542,36 @@
         </div>
         <!-- [ sample-page ] end -->
     </div>
-
-
-
-
-
-
-
 @endsection
+
+@push('script-page')
+    <script>
+        $(document).on('click', '.estimationStatusChange', function() {
+            $('body').addClass('busy');
+            $('.estimationStatusChange').prop('disabled', true);
+            $("#loading").removeClass('d-none');
+
+            var estimationStatus = this.value;
+            var estimationUrl = $(this).data('url');
+            $.ajax({
+                url: estimationUrl + '?status=' + estimationStatus,
+                type: 'GET',
+                cache: false,
+                success: function(data) {
+                    location.reload();
+                },
+                complete: function() {
+                    $('body').removeClass('busy');
+                    $('.estimationStatusChange').prop('disabled', false);
+                    $("#loading").addClass('d-none');
+                },
+            });
+        });
+    </script>
+
+    <style>
+    body.busy{
+        cursor: wait !important;
+    }
+    </style>
+@endpush

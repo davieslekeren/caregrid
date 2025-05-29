@@ -242,6 +242,11 @@ class WorkOrderController extends Controller
             $id = Crypt::decrypt($id);
             $workorder = WorkOrder::find($id);
             $status = WorkOrder::$status;
+            if($workorder->assigned->id == Auth::user()->id){
+                unset($status['pending']);
+                unset($status['completed']);
+                unset($status['cancelled']);
+            }
             return view('workorder.show', compact('workorder', 'status'));
         } else {
             return redirect()->back()->with('error', __('Permission Denied!'));

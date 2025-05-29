@@ -10,6 +10,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Validator;
 
 class InvoiceController extends Controller
 {
@@ -37,8 +38,8 @@ class InvoiceController extends Controller
 
     public function store(Request $request)
     {
-        if (\Auth::user()->can('create invoice')) {
-            $validator = \Validator::make(
+        if (Auth::user()->can('create invoice')) {
+            $validator = Validator::make(
                 $request->all(), [
                     'client' => 'required',
                     'workorder' => 'required',
@@ -97,7 +98,7 @@ class InvoiceController extends Controller
 
     public function show($ids)
     {
-        if (\Auth::user()->can('show work order')) {
+        if (Auth::user()->can('show work order')) {
             $id=Crypt::decrypt($ids);
             $invoice=Invoice::find($id);
             $workorder=WorkOrder::find($invoice->wo_id);

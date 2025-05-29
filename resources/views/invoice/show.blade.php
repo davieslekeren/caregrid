@@ -84,6 +84,14 @@
                                         <span class="text-muted f-w-400">{{ workOrderPrefix() . $workorder->wo_id }}</span>
                                     </h6>
                                     <h6>
+                                        {{ __('Project') }} :
+                                        <span class="text-muted f-w-400">{{ !empty($workorder->project_title) ? $workorder->project_title : '-' }}</span>
+                                    </h6>
+                                    <h6>
+                                        {{ __('Location') }} :
+                                        <span class="text-muted f-w-400">{{ !empty($workorder->project_location) ? $workorder->project_location : '-' }}</span>
+                                    </h6>
+                                    <h6>
                                         {{ __('Invoice Date') }} :
                                         <span class="text-muted f-w-400">{{ dateFormat($invoice->invoice_date) }}</span>
                                     </h6>
